@@ -555,3 +555,54 @@ body::after{
 
     color:#000;
 }
+
+.spotify-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 260px;
+
+  background: rgba(20, 20, 20, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 15px;
+  color: white;
+
+  font-family: Arial, sans-serif;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.track-info {
+  margin-bottom: 10px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.songs button {
+  width: 100%;
+  margin-top: 5px;
+  padding: 6px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.songs button:hover {
+  background: rgba(255,255,255,0.2);
+}

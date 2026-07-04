@@ -248,7 +248,7 @@ async function handleCommand(cmd) {
             await typeLine("Hey handsome 😏");
             await typeLine("");
             await typeLine("Sorry, I can’t reply to your next text...");
-            await typeLine("I’m currently distracted thinking about yesterday.");
+            await typeLine("I’m currently distracted thinking about you.");
             break;  
 
         default:
@@ -275,3 +275,62 @@ input.addEventListener("keydown", async (e) => {
 /* ---------- INIT ---------- */
 
 window.onload = boot;
+
+const tracks = [
+  {
+    title: "Jamiroquai – Blow Your Mind",
+    src: "music/blow-your-mind.mp3"
+  },
+  {
+    title: "Emotional Oranges – West Coast Love",
+    src: "music/west-coast-love.mp3"
+  }
+];
+
+let currentIndex = 0;
+let isPlaying = false;
+
+const player = document.getElementById("audioPlayer");
+const title = document.getElementById("trackTitle");
+const playBtn = document.getElementById("playBtn");
+
+function loadTrack(index) {
+  currentIndex = index;
+  player.src = tracks[index].src;
+  title.textContent = tracks[index].title;
+}
+
+function playTrack(index) {
+  loadTrack(index);
+  player.play();
+  isPlaying = true;
+  playBtn.textContent = "⏸";
+}
+
+function togglePlay() {
+  if (!player.src) {
+    loadTrack(0);
+  }
+
+  if (isPlaying) {
+    player.pause();
+    playBtn.textContent = "▶";
+  } else {
+    player.play();
+    playBtn.textContent = "⏸";
+  }
+
+  isPlaying = !isPlaying;
+}
+
+function nextTrack() {
+  let next = (currentIndex + 1) % tracks.length;
+  playTrack(next);
+}
+
+function prevTrack() {
+  let prev = (currentIndex - 1 + tracks.length) % tracks.length;
+  playTrack(prev);
+}
+
+console.log(tracks);

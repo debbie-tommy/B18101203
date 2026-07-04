@@ -45,7 +45,28 @@
 
 </div>
 
-<script src="script.js"></script>
 
+<div class="spotify-widget">
+
+  <div class="track-info">
+    <p id="trackTitle">Select a song</p>
+  </div>
+
+  <audio id="audioPlayer"></audio>
+
+  <div class="controls">
+    <button onclick="prevTrack()">⏮</button>
+    <button onclick="togglePlay()" id="playBtn">▶</button>
+    <button onclick="nextTrack()">⏭</button>
+  </div>
+
+  <div class="songs">
+    <button onclick="playTrack(0)">Blow Your Mind</button>
+    <button onclick="playTrack(1)">West Coast Love</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
