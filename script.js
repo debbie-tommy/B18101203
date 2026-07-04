@@ -584,13 +584,13 @@ function checkCrosswordAnswers() {
     });
 
     if (correct === inputs.length) {
-        cwResult.textContent = "💚 all correct — you know me too well";
+        cwResult.textContent = "💚 all correct! you know me too well";
         cwResult.style.color = "#7dff7d";
     } else if (filled === 0) {
         cwResult.textContent = "fill in a few letters first";
         cwResult.style.color = "#999";
     } else {
-        cwResult.textContent = `${correct}/${inputs.length} correct — keep going`;
+        cwResult.textContent = `${correct}/${inputs.length} correct! keep going`;
         cwResult.style.color = "#ffd966";
     }
 }
