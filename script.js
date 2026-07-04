@@ -240,6 +240,17 @@ async function handleCommand(cmd) {
             output.innerHTML = "";
             break;
 
+        case "hey":
+        case "hi":
+        case "hello":
+
+            await typeLine("");
+            await typeLine("Hey handsome 😏");
+            await typeLine("");
+            await typeLine("Sorry, I can’t reply to your next text...");
+            await typeLine("I’m currently distracted thinking about yesterday.");
+            break;  
+
         default:
             await typeLine(`Unknown command: ${cmd}`);
             await typeLine("Type 'help' to see available commands.");
