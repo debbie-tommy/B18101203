@@ -556,53 +556,458 @@ body::after{
     color:#000;
 }
 
+/* =====================================================
+   SPOTIFY-STYLE NOW PLAYING CARD
+===================================================== */
+
 .spotify-widget {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 260px;
+  width: 300px;
+  z-index: 50;
 
-  background: rgba(20, 20, 20, 0.75);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 15px;
-  color: white;
+  background: rgba(18, 18, 18, 0.82);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 18px;
+  padding: 16px 18px 14px;
+  color: #fff;
 
   font-family: Arial, sans-serif;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
-.track-info {
-  margin-bottom: 10px;
-  font-size: 14px;
-  opacity: 0.9;
+.spotify-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
 }
 
-.controls {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+.chevron{
+  background:none;
+  border:none;
+  color:#888;
+  font-size:16px;
+  cursor:pointer;
+  line-height:1;
 }
 
-.controls button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
+.now-playing{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
 }
 
-.songs button {
+.album-art{
+  width:56px;
+  height:56px;
+  flex-shrink:0;
+  border-radius:10px;
+  background: linear-gradient(135deg,#3a2a55,#8b3e8f 45%,#e0538f);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.4);
+  overflow:hidden;
+}
+
+.track-meta{
+  flex:1;
+  min-width:0;
+}
+
+.playing-label{
+  font-size:10px;
+  letter-spacing:.08em;
+  color:#1ed760;
+  font-weight:700;
+  margin-bottom:2px;
+}
+
+#trackTitle{
+  font-size:15px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+#trackArtist{
+  font-size:12.5px;
+  color:#b3b3b3;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.like-btn{
+  background:none;
+  border:none;
+  color:#666;
+  font-size:18px;
+  cursor:pointer;
+  flex-shrink:0;
+  transition: color .2s, transform .2s;
+}
+
+.like-btn.liked{
+  color:#1ed760;
+  transform:scale(1.15);
+}
+
+.progress-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.progress-row span{
+  font-size:10.5px;
+  color:#999;
+  min-width:30px;
+}
+
+#seekBar{
+  flex:1;
+  -webkit-appearance:none;
+  appearance:none;
+  height:4px;
+  border-radius:4px;
+  background: linear-gradient(to right, #1ed760 var(--progress,0%), #4d4d4d var(--progress,0%));
+  cursor:pointer;
+  outline:none;
+}
+
+#seekBar::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 6px rgba(0,0,0,.5);
+}
+
+#seekBar::-moz-range-thumb{
+  width:11px;
+  height:11px;
+  border:none;
+  border-radius:50%;
+  background:#fff;
+}
+
+.controls{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.ctrl-btn{
+  background:none;
+  border:none;
+  color:#b3b3b3;
+  font-size:16px;
+  cursor:pointer;
+  transition: color .15s, transform .15s;
+}
+
+.ctrl-btn:hover{
+  color:#fff;
+  transform:scale(1.1);
+}
+
+.ctrl-btn.active{
+  color:#1ed760;
+}
+
+.play-btn{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#1ed760;
+  border:none;
+  color:#000;
+  font-size:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition: transform .15s;
+}
+
+.play-btn:hover{
+  transform:scale(1.06);
+}
+
+.visualizer{
+  display:flex;
+  align-items:flex-end;
+  gap:2px;
+  height:16px;
+  margin-bottom:12px;
+  opacity:.85;
+}
+
+.visualizer span{
+  flex:1;
+  background:#1ed760;
+  border-radius:2px;
+  height:20%;
+  transition: height .15s ease;
+}
+
+.songs{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.song-btn {
   width: 100%;
-  margin-top: 5px;
-  padding: 6px;
+  padding: 7px 10px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background: rgba(255,255,255,0.1);
-  color: white;
+  background: rgba(255,255,255,0.06);
+  color: #ddd;
+  font-size:12.5px;
+  text-align:left;
+  transition: background .15s;
 }
 
-.songs button:hover {
-  background: rgba(255,255,255,0.2);
+.song-btn:hover,
+.song-btn.now-playing-btn {
+  background: rgba(30,215,96,0.18);
+  color:#fff;
+}
+
+/* =====================================================
+   MINI CROSSWORD
+===================================================== */
+
+.crossword-widget{
+  position:fixed;
+  bottom:20px;
+  right:335px;
+  width:360px;
+  z-index:49;
+
+  background: rgba(18,18,18,0.82);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius:18px;
+  padding:16px 18px;
+  color:#fff;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.crossword-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:12px;
+  letter-spacing:.06em;
+  font-weight:700;
+  color:#eee;
+  margin-bottom:12px;
+}
+
+.like-btn.small{
+  font-size:15px;
+  color:#ff8ad8;
+}
+
+.crossword-body{
+  display:flex;
+  gap:14px;
+}
+
+.crossword-grid{
+  display:grid;
+  gap:2px;
+  flex-shrink:0;
+}
+
+.cw-cell{
+  width:26px;
+  height:26px;
+  position:relative;
+  background:#161616;
+  border:1px solid #2b2b2b;
+  border-radius:3px;
+}
+
+.cw-cell.blocked{
+  background: linear-gradient(135deg,#ff8ad8,#ff5fc1);
+  border:none;
+}
+
+.cw-cell input{
+  width:100%;
+  height:100%;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:#59ff59;
+  text-align:center;
+  text-transform:uppercase;
+  font-family:'JetBrains Mono', monospace;
+  font-size:13px;
+  caret-color:#59ff59;
+}
+
+.cw-cell input.correct{
+  color:#7dff7d;
+  background: rgba(30,215,96,0.18);
+}
+
+.cw-cell input.incorrect{
+  color:#ff6868;
+  background: rgba(255,104,104,0.15);
+}
+
+.cw-number{
+  position:absolute;
+  top:1px;
+  left:2px;
+  font-size:7px;
+  color:#888;
+  pointer-events:none;
+}
+
+.crossword-clues{
+  flex:1;
+  min-width:0;
+  font-size:11.5px;
+  line-height:1.5;
+}
+
+.clue-group h4{
+  color:#ff8ad8;
+  font-size:10px;
+  letter-spacing:.08em;
+  margin-bottom:4px;
+}
+
+.clue-group{
+  margin-bottom:12px;
+}
+
+.clue-group ol{
+  list-style:none;
+  color:#ccc;
+}
+
+.clue-group li{
+  margin-bottom:3px;
+}
+
+.clue-group li::before{
+  content: attr(data-num) ". ";
+  color:#58ff58;
+  font-weight:700;
+}
+
+#checkAnswersBtn{
+  width:100%;
+  margin-top:14px;
+  padding:9px;
+  border:none;
+  border-radius:10px;
+  background: rgba(255,138,216,0.15);
+  color:#ff8ad8;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.03em;
+  cursor:pointer;
+  transition: background .15s;
+}
+
+#checkAnswersBtn:hover{
+  background: rgba(255,138,216,0.28);
+}
+
+#crosswordResult{
+  margin-top:8px;
+  font-size:12px;
+  text-align:center;
+  min-height:16px;
+}
+
+/* =====================================================
+   BOTTOM DOCK
+===================================================== */
+
+.dock{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  padding:10px 16px;
+  background: rgba(18,18,18,0.75);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius:20px;
+  z-index:48;
+}
+
+.dock-btn{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  border:none;
+  background: rgba(255,255,255,0.05);
+  color:#58ff58;
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition: transform .15s, background .15s;
+}
+
+.dock-btn:hover{
+  background: rgba(88,255,88,0.15);
+  transform:translateY(-3px);
+}
+
+/* =====================================================
+   RESPONSIVE: stack widgets on small screens
+===================================================== */
+
+@media (max-width: 1300px){
+  .crossword-widget{
+    right:20px;
+    bottom:auto;
+    top:20px;
+  }
+}
+
+@media (max-width: 900px){
+  .spotify-widget,
+  .crossword-widget{
+    position:static;
+    width:100%;
+    max-width:420px;
+    margin: 14px auto 0;
+  }
+  .dock{
+    position:static;
+    transform:none;
+    width:fit-content;
+    margin: 14px auto 0;
+  }
+  body{
+    flex-direction:column;
+    height:auto;
+    overflow:auto;
+  }
 }
