@@ -464,8 +464,10 @@ const cwGrid = document.getElementById("crosswordGrid");
 const acrossList = document.getElementById("acrossClues");
 const downList = document.getElementById("downClues");
 const checkBtn = document.getElementById("checkAnswersBtn");
+const clearBtn = document.getElementById("clearAnswersBtn");
 const cwResult = document.getElementById("crosswordResult");
 const crosswordLike = document.getElementById("crosswordLike");
+const crosswordWidget = document.getElementById("crosswordWidget");
 
 function buildCrosswordModel() {
     const { rows, cols, words } = CONFIG.crossword;
@@ -582,22 +584,50 @@ function checkCrosswordAnswers() {
     });
 
     if (correct === inputs.length) {
-        cwResult.textContent = "💚 all correct!  you know me too well";
+        cwResult.textContent = "💚 all correct — you know me too well";
         cwResult.style.color = "#7dff7d";
     } else if (filled === 0) {
         cwResult.textContent = "fill in a few letters first";
         cwResult.style.color = "#999";
     } else {
-        cwResult.textContent = `${correct}/${inputs.length} correct! keep going`;
+        cwResult.textContent = `${correct}/${inputs.length} correct — keep going`;
         cwResult.style.color = "#ffd966";
     }
 }
 
+function clearCrosswordAnswers() {
+    const inputs = cwGrid.querySelectorAll("input");
+    inputs.forEach(input => {
+        input.value = "";
+        input.classList.remove("correct", "incorrect");
+    });
+    cwResult.textContent = "";
+}
+
 checkBtn.addEventListener("click", checkCrosswordAnswers);
+clearBtn.addEventListener("click", clearCrosswordAnswers);
 crosswordLike.addEventListener("click", () => crosswordLike.classList.toggle("liked"));
 
 renderCrossword();
 renderClues();
+
+/* =====================================================
+   MINIMIZE TOGGLES
+===================================================== */
+
+const spotifyWidget = document.getElementById("spotifyWidget");
+const spotifyMinimize = document.getElementById("spotifyMinimize");
+const crosswordMinimize = document.getElementById("crosswordMinimize");
+
+spotifyMinimize.addEventListener("click", () => {
+    spotifyWidget.classList.toggle("minimized");
+    spotifyMinimize.classList.toggle("rotated");
+});
+
+crosswordMinimize.addEventListener("click", () => {
+    crosswordWidget.classList.toggle("minimized");
+    crosswordMinimize.classList.toggle("rotated");
+});
 
 /* =====================================================
    BOTTOM DOCK

@@ -76,9 +76,30 @@ body::after{
 
 /* ========================= */
 
-#boot-screen{
+.app-layout{
 
     width:100%;
+
+    max-width:1320px;
+
+    height:80vh;
+
+    display:flex;
+
+    align-items:stretch;
+
+    justify-content:center;
+
+    gap:22px;
+}
+
+/* ========================= */
+
+#boot-screen{
+
+    flex:1 1 auto;
+
+    min-width:0;
 
     display:flex;
 
@@ -89,13 +110,43 @@ body::after{
 
 /* ========================= */
 
+.sidebar{
+
+    width:320px;
+
+    flex-shrink:0;
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+    overflow-y:auto;
+
+    padding-right:2px;
+}
+
+.sidebar::-webkit-scrollbar{
+    width:6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+    background:#333;
+    border-radius:20px;
+}
+
+/* ========================= */
+
 .terminal{
 
     width:100%;
 
     max-width:900px;
 
-    height:82vh;
+    height:100%;
 
     background:#101010;
 
@@ -561,11 +612,8 @@ body::after{
 ===================================================== */
 
 .spotify-widget {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 300px;
-  z-index: 50;
+  width: 100%;
+  flex-shrink: 0;
 
   background: rgba(18, 18, 18, 0.82);
   backdrop-filter: blur(16px);
@@ -581,8 +629,16 @@ body::after{
 .spotify-top{
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  gap:8px;
   margin-bottom:14px;
+}
+
+.widget-name{
+  flex:1;
+  font-size:11px;
+  letter-spacing:.06em;
+  color:#888;
+  text-transform:uppercase;
 }
 
 .chevron{
@@ -592,6 +648,25 @@ body::after{
   font-size:16px;
   cursor:pointer;
   line-height:1;
+  transition: transform .2s;
+}
+
+.chevron.rotated{
+  transform: rotate(180deg);
+}
+
+/* minimized: hide everything except the top row */
+.spotify-widget.minimized .now-playing,
+.spotify-widget.minimized audio,
+.spotify-widget.minimized .progress-row,
+.spotify-widget.minimized .controls,
+.spotify-widget.minimized .visualizer,
+.spotify-widget.minimized .songs{
+  display:none;
+}
+
+.spotify-widget.minimized{
+  padding-bottom:16px;
 }
 
 .now-playing{
@@ -791,11 +866,8 @@ body::after{
 ===================================================== */
 
 .crossword-widget{
-  position:fixed;
-  bottom:20px;
-  right:335px;
-  width:360px;
-  z-index:49;
+  width:100%;
+  flex-shrink:0;
 
   background: rgba(18,18,18,0.82);
   backdrop-filter: blur(16px);
@@ -815,7 +887,20 @@ body::after{
   letter-spacing:.06em;
   font-weight:700;
   color:#eee;
-  margin-bottom:12px;
+}
+
+.crossword-widget .crossword-collapsible{
+  margin-top:12px;
+}
+
+.crossword-widget.minimized .crossword-collapsible{
+  display:none;
+}
+
+.crossword-header-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
 
 .like-btn.small{
@@ -825,13 +910,16 @@ body::after{
 
 .crossword-body{
   display:flex;
+  flex-direction:column;
   gap:14px;
+  align-items:center;
 }
 
 .crossword-grid{
   display:grid;
   gap:2px;
   flex-shrink:0;
+  margin:0 auto;
 }
 
 .cw-cell{
@@ -882,10 +970,17 @@ body::after{
 }
 
 .crossword-clues{
-  flex:1;
-  min-width:0;
+  width:100%;
+  display:flex;
+  gap:18px;
   font-size:11.5px;
   line-height:1.5;
+}
+
+.clue-group{
+  flex:1;
+  min-width:0;
+  margin-bottom:0;
 }
 
 .clue-group h4{
@@ -893,10 +988,6 @@ body::after{
   font-size:10px;
   letter-spacing:.08em;
   margin-bottom:4px;
-}
-
-.clue-group{
-  margin-bottom:12px;
 }
 
 .clue-group ol{
@@ -914,9 +1005,14 @@ body::after{
   font-weight:700;
 }
 
-#checkAnswersBtn{
-  width:100%;
+.crossword-actions{
+  display:flex;
+  gap:8px;
   margin-top:14px;
+}
+
+#checkAnswersBtn{
+  flex:1;
   padding:9px;
   border:none;
   border-radius:10px;
@@ -931,6 +1027,24 @@ body::after{
 
 #checkAnswersBtn:hover{
   background: rgba(255,138,216,0.28);
+}
+
+#clearAnswersBtn{
+  padding:9px 14px;
+  border:none;
+  border-radius:10px;
+  background: rgba(255,255,255,0.06);
+  color:#999;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.03em;
+  cursor:pointer;
+  transition: background .15s, color .15s;
+}
+
+#clearAnswersBtn:hover{
+  background: rgba(255,255,255,0.12);
+  color:#ddd;
 }
 
 #crosswordResult{
@@ -983,31 +1097,41 @@ body::after{
    RESPONSIVE: stack widgets on small screens
 ===================================================== */
 
-@media (max-width: 1300px){
-  .crossword-widget{
-    right:20px;
-    bottom:auto;
-    top:20px;
+@media (max-width: 1100px){
+  .app-layout{
+    max-width:100%;
+  }
+  .sidebar{
+    width:280px;
   }
 }
 
 @media (max-width: 900px){
-  .spotify-widget,
-  .crossword-widget{
-    position:static;
-    width:100%;
-    max-width:420px;
-    margin: 14px auto 0;
-  }
-  .dock{
-    position:static;
-    transform:none;
-    width:fit-content;
-    margin: 14px auto 0;
-  }
   body{
     flex-direction:column;
     height:auto;
-    overflow:auto;
+    overflow-y:auto;
+    padding-bottom:100px;
+  }
+  .app-layout{
+    flex-direction:column;
+    height:auto;
+    max-width:480px;
+    align-items:center;
+  }
+  #boot-screen{
+    width:100%;
+  }
+  .terminal{
+    height:70vh;
+  }
+  .sidebar{
+    width:100%;
+    height:auto;
+    overflow:visible;
+  }
+  .dock{
+    position:fixed;
+    bottom:14px;
   }
 }
